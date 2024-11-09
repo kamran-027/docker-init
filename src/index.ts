@@ -14,8 +14,6 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-  console.log("Req body::", req);
-
   await client.user.create({
     data: {
       email: req.body.email,
@@ -24,7 +22,7 @@ app.post("/", async (req, res) => {
   });
 
   res.json({
-    message: "Done signing up!",
+    message: "Done signing up you fool!",
   });
 });
 
