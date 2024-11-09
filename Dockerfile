@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package* .
+COPY package* ./
 
 RUN npm install
 
@@ -10,7 +10,7 @@ COPY ./prisma .
 
 RUN npx prisma generate
 
-COPY . .
+COPY . ./
 
 RUN npm run build
 

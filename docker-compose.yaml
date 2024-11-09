@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+  app:
+    build: "."
+    container_name: sample_backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:mySecretPassword@db:5432/init_db"
+  db:
+    image: "postgres"
+    container_name: postgresdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mySecretPassword
+
+volumes:
+  postgres_data:
