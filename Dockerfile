@@ -6,7 +6,9 @@ COPY package* ./
 
 RUN npm install
 
-COPY ./prisma .
+COPY ./prisma ./
+
+# RUN npx prisma migrate deploy
 
 RUN npx prisma generate
 
