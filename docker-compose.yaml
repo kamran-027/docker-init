@@ -1,4 +1,4 @@
-version: "3.3"
+version: "2.4"
 
 services:
   app:
@@ -9,7 +9,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:mySecretPassword@db:5432/init
     depends_on:
-      - db
+      db : 
+        condition: service_healthy
 
   db:
     image: postgres
@@ -17,11 +18,16 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql@16/data
     environment:
       POSTGRES_PASSWORD: mySecretPassword
-      POSTGRES_USE: postgres
+      POSTGRES_USER: postgres
       POSTGRES_DB: init
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}' ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
  
 
 volumes:
